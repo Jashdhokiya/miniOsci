@@ -89,7 +89,7 @@ MiniOsci/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/MiniOsci.git
+   git clone https://github.com/Jashdhokiya/MiniOsci.git
    ```
 2. Open **STM32CubeIDE** → *File → Import → Existing Projects into Workspace*.
 3. Select the cloned `MiniOsci` folder.
