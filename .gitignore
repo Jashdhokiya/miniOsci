@@ -1,0 +1,82 @@
+# ========================
+# STM32CubeIDE / Eclipse
+# ========================
+
+# Build output directories
+Debug/
+Release/
+
+# Eclipse IDE settings (machine-specific)
+.settings/
+.cproject
+.project
+.mxproject
+
+# Eclipse metadata
+.metadata/
+*.launch
+.buildpath
+
+# ========================
+# Build Artifacts
+# ========================
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.srec
+*.s19
+*.a
+
+# ========================
+# OS-generated files
+# ========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Trashes
+
+# Linux
+*~
+.directory
+
+# ========================
+# IDE / Editor specific
+# ========================
+
+# VS Code
+.vscode/
+
+# JetBrains (CLion, etc.)
+.idea/
+*.iml
+cmake-build-*/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ========================
+# Miscellaneous
+# ========================
+*.bak
+*.tmp
+*.log
