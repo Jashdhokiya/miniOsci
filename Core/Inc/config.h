@@ -70,4 +70,10 @@ static const char* VOLT_DIV_LABELS[] = { "0.5V", "1V", "2V", "5V" };
 #define ADC_WATCHDOG_HIGH     3700
 #define ADC_WATCHDOG_LOW      0
 
+/* ── Function Generator ── */
+#define FUNCGEN_LUT_SIZE      64
+#define FUNCGEN_PWM_ARR       255       /* 8-bit resolution */
+#define FUNCGEN_DEFAULT_FREQ  1000      /* 1 kHz */
+#define FUNCGEN_TIM_CLOCK     100000000UL  /* APB1 timer clock (MHz) */
+
 #endif /* CONFIG_H */

@@ -33,6 +33,7 @@
 #include "osc_display.h"
 #include "osc_ui.h"
 #include "ili9341.h"
+#include "func_gen.h"
 #include <string.h>
 #include <stdio.h>
 /* USER CODE END Includes */
@@ -104,17 +105,24 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
+  MX_TIM4_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
 
   /* Initialize display */
   Display_Init();
 
   /* Splash screen */
-  ILI9341_DrawString(40, 120, "OSCILLOSCOPE", COLOR_GREEN, COLOR_BLACK, 2);
-  ILI9341_DrawString(60, 150, "Dual Channel", COLOR_CYAN, COLOR_BLACK, 1);
-  ILI9341_DrawString(50, 170, "STM32F411 BlackPill", COLOR_DARK_GRAY, COLOR_BLACK, 1);
+  ILI9341_DrawString(40, 100, "OSCILLOSCOPE", COLOR_GREEN, COLOR_BLACK, 2);
+  ILI9341_DrawString(60, 130, "Dual Channel", COLOR_CYAN, COLOR_BLACK, 1);
+  ILI9341_DrawString(40, 150, "+ Function Generator", COLOR_ORANGE, COLOR_BLACK, 1);
+  ILI9341_DrawString(50, 175, "STM32F411 BlackPill", COLOR_DARK_GRAY, COLOR_BLACK, 1);
   HAL_Delay(1500);
   Display_ClearScreen();
+
+  /* Start function generator (1 kHz sine on PB8) */
+  FuncGen_Init();
+  FuncGen_Start();
 
   /* Start ADC + DMA + Timer sampling */
   OSC_ADC_Start();
