@@ -143,7 +143,6 @@ MiniOsci/
 1. Clone the repository:
    ```bash
    git clone https://github.com/Jashdhokiya/miniOsci.git
-   git clone https://github.com/Jashdhokiya/MiniOsci.git
    ```
 2. Open **STM32CubeIDE** → *File → Import → General → Import an Existing STM32CubeMX Configuration File (.ioc)* → select `MiniOsci.ioc`.
 3. Build: **Project → Build All** (`Ctrl+B`).
@@ -158,9 +157,9 @@ Open `MiniOsci.ioc` in STM32CubeMX to modify pin assignments, clock tree, or per
 ## Architecture
 
 ```
-┌─────────────┐     TIM2 TRGO      ┌──────────┐    DMA (Circular)
+┌─────────────┐     TIM2 TRGO       ┌──────────┐    DMA (Circular)
 │  Timer 2    │ ──────────────────► │   ADC1   │ ──────────────────► adc_buffer[512]
-│ (sampling)  │                     │ (2ch scan)│                     (interleaved)
+│ (sampling)  │                     │(2ch scan)│                     (interleaved)
 └─────────────┘                     └──────────┘
                                                           │
                                          DMA Half/Complete Callback
