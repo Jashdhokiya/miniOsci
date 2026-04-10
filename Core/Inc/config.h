@@ -44,17 +44,22 @@
 
 /* ── Time Division ── */
 #define NUM_TIME_DIVS         7
+__attribute__((unused))
 static const uint32_t TIME_DIV_US[] = { 10, 20, 50, 100, 200, 500, 1000 };
+__attribute__((unused))
 static const char* TIME_DIV_LABELS[] = {
     "10us", "20us", "50us", "100us", "200us", "500us", "1ms"
 };
+__attribute__((unused))
 static const uint32_t TIME_DIV_ARR[] = {
     100-1, 200-1, 500-1, 1000-1, 2000-1, 5000-1, 10000-1
 };
 
 /* ── Voltage Division ── */
 #define NUM_VOLT_DIVS         4
+__attribute__((unused))
 static const float VOLT_DIV_VALUES[] = { 0.5f, 1.0f, 2.0f, 5.0f };
+__attribute__((unused))
 static const char* VOLT_DIV_LABELS[] = { "0.5V", "1V", "2V", "5V" };
 #define VOLTAGE_DIVIDER_RATIO  11.0f
 
@@ -64,5 +69,11 @@ static const char* VOLT_DIV_LABELS[] = { "0.5V", "1V", "2V", "5V" };
 /* ── ADC Watchdog ── */
 #define ADC_WATCHDOG_HIGH     3700
 #define ADC_WATCHDOG_LOW      0
+
+/* ── Function Generator ── */
+#define FUNCGEN_LUT_SIZE      64
+#define FUNCGEN_PWM_ARR       255       /* 8-bit resolution */
+#define FUNCGEN_DEFAULT_FREQ  1000      /* 1 kHz */
+#define FUNCGEN_TIM_CLOCK     100000000UL  /* APB1 timer clock (MHz) */
 
 #endif /* CONFIG_H */

@@ -6,6 +6,7 @@
 #include "osc_display.h"
 #include "ili9341.h"
 #include "osc_signal.h"
+#include "func_gen.h"
 #include "config.h"
 #include <stdio.h>
 #include <string.h>
@@ -117,6 +118,16 @@ void Display_DrawMeasurements(float freq, float vpp, uint8_t channel,
 
     if (isHold) ILI9341_DrawString(170, bottomY + 4, "HOLD", COLOR_RED, COLOR_BACKGROUND, 1);
     else ILI9341_DrawString(170, bottomY + 4, " RUN", COLOR_GREEN, COLOR_BACKGROUND, 1);
+
+    /* Function generator status — second row */
+    if (FuncGen_IsRunning()) {
+        uint32_t fgFreq = FuncGen_GetFrequency();
+        if (fgFreq >= 1000)
+            snprintf(buf, sizeof(buf), "FG:%s %lukHz", FuncGen_GetWaveformName(), (unsigned long)(fgFreq / 1000));
+        else
+            snprintf(buf, sizeof(buf), "FG:%s %luHz", FuncGen_GetWaveformName(), (unsigned long)fgFreq);
+        ILI9341_DrawString(2, bottomY + 16, buf, COLOR_ORANGE, COLOR_BACKGROUND, 1);
+    }
 }
 
 void Display_ShowWarning(const char* msg)

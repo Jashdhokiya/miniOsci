@@ -61,6 +61,7 @@ void EXTI2_IRQHandler(void);
 void EXTI3_IRQHandler(void);
 void ADC_IRQHandler(void);
 void DMA2_Stream0_IRQHandler(void);
+void TIM5_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

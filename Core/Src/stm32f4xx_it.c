@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "osc_ui.h"
 #include "osc_display.h"
+#include "func_gen.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -293,6 +294,18 @@ void DMA2_Stream0_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     UI_HandleButton(GPIO_Pin);
+}
+
+/**
+ * @brief TIM5 interrupt — function generator waveform step
+ *        Uses direct register access for minimal latency.
+ */
+void TIM5_IRQHandler(void)
+{
+    if (TIM5->SR & TIM_SR_UIF) {
+        TIM5->SR = ~TIM_SR_UIF;
+        FuncGen_StepISR();
+    }
 }
 
 /* USER CODE END 1 */
