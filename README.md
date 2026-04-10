@@ -143,6 +143,7 @@ MiniOsci/
 1. Clone the repository:
    ```bash
    git clone https://github.com/Jashdhokiya/miniOsci.git
+   git clone https://github.com/Jashdhokiya/MiniOsci.git
    ```
 2. Open **STM32CubeIDE** → *File → Import → General → Import an Existing STM32CubeMX Configuration File (.ioc)* → select `MiniOsci.ioc`.
 3. Build: **Project → Build All** (`Ctrl+B`).
