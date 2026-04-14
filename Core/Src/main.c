@@ -56,7 +56,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+static uint8_t holdDrawn = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -112,11 +112,12 @@ int main(void)
   /* Initialize display */
   Display_Init();
 
-  /* Splash screen */
-  ILI9341_DrawString(40, 100, "OSCILLOSCOPE", COLOR_GREEN, COLOR_BLACK, 2);
-  ILI9341_DrawString(60, 130, "Dual Channel", COLOR_CYAN, COLOR_BLACK, 1);
-  ILI9341_DrawString(40, 150, "+ Function Generator", COLOR_ORANGE, COLOR_BLACK, 1);
-  ILI9341_DrawString(50, 175, "STM32F411 BlackPill", COLOR_DARK_GRAY, COLOR_BLACK, 1);
+  /* Splash screen — landscape centered */
+  ILI9341_FillScreen(COLOR_PANEL_BG);
+  ILI9341_DrawString(64, 60, "MINI OSCILLOSCOPE", COLOR_GREEN, COLOR_PANEL_BG, 2);
+  ILI9341_DrawString(96, 100, "Dual Channel + FuncGen", COLOR_CYAN, COLOR_PANEL_BG, 1);
+  ILI9341_DrawString(88, 130, "STM32F411 BlackPill", COLOR_ORANGE, COLOR_PANEL_BG, 1);
+  ILI9341_DrawString(100, 160, "v1.0  |  MiniOsci", COLOR_AXIS_LABEL, COLOR_PANEL_BG, 1);
   HAL_Delay(1500);
   Display_ClearScreen();
 
@@ -154,13 +155,18 @@ int main(void)
 
         Display_ClearWaveform();
         Display_DrawGrid();
+        Display_DrawAxisLabels(timeDivIdx, voltDivIdx);
         Display_DrawWaveform(buf, SAMPLE_BUFFER_SIZE, ch, voltDiv);
         Display_DrawMeasurements(freq, vpp, ch, timeDivIdx, voltDivIdx, 0);
+
+        /* Stats overlay (toggle with PB4) */
+        if (UI_GetStatsVisible()) {
+            Display_DrawStats(buf, SAMPLE_BUFFER_SIZE, ch);
+        }
     }
     else if (UI_GetState() == STATE_HOLD)
     {
         /* Redraw HOLD status once */
-        static uint8_t holdDrawn = 0;
         if (!holdDrawn) {
             uint8_t ch = UI_GetChannel();
             uint16_t* buf = OSC_ADC_GetBuffer(ch);
@@ -172,7 +178,10 @@ int main(void)
             Display_DrawMeasurements(f, v, ch, tdi, vdi, 1);
             holdDrawn = 1;
         }
-        if (UI_GetState() == STATE_RUN) holdDrawn = 0;
+    }
+    else
+    {
+        holdDrawn = 0;
     }
 
   }

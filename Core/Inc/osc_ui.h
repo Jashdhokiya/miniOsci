@@ -17,5 +17,6 @@ uint8_t UI_GetTimeDivIndex(void);
 uint8_t UI_GetVoltDivIndex(void);
 uint32_t UI_GetTimeDivUs(void);
 float UI_GetVoltDiv(void);
+uint8_t UI_GetStatsVisible(void);
 
 #endif /* OSC_UI_H */

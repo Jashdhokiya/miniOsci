@@ -7,23 +7,23 @@
 #define CONFIG_H
 
 /* ── Sampling ── */
-#define SAMPLE_BUFFER_SIZE    256
+#define SAMPLE_BUFFER_SIZE    512
 #define ADC_BUFFER_SIZE       (SAMPLE_BUFFER_SIZE * 2)  /* interleaved CH1+CH2 */
 #define ADC_MAX               4095
 #define VREF                  3.3f
 #define NUM_CHANNELS          2
 
-/* ── Display ── */
-#define SCREEN_WIDTH          240
-#define SCREEN_HEIGHT         320
+/* ── Display (landscape: 320×240) ── */
+#define SCREEN_WIDTH          320
+#define SCREEN_HEIGHT         240
 #define WAVE_X_OFFSET         0
 #define WAVE_Y_OFFSET         20
 #define WAVE_WIDTH            SCREEN_WIDTH
 #define WAVE_HEIGHT           (SCREEN_HEIGHT - 50)
-#define GRID_DIVISIONS_X      8
+#define GRID_DIVISIONS_X      10
 #define GRID_DIVISIONS_Y      6
 
-/* ── Colors (RGB565) ── */
+/* ── Colors — Dark Pro Theme (RGB565) ── */
 #define COLOR_BLACK           0x0000
 #define COLOR_WHITE           0xFFFF
 #define COLOR_GREEN           0x07E0
@@ -31,12 +31,18 @@
 #define COLOR_CYAN            0x07FF
 #define COLOR_RED             0xF800
 #define COLOR_DARK_GREEN      0x03E0
-#define COLOR_DARK_GRAY       0x4208
+#define COLOR_DARK_GRAY       0x2104   /* Subtle grid lines */
 #define COLOR_LIGHT_GRAY      0xC618
 #define COLOR_ORANGE          0xFD20
 #define COLOR_MAGENTA         0xF81F
-#define COLOR_CH1             COLOR_YELLOW
-#define COLOR_CH2             COLOR_CYAN
+#define COLOR_TEAL            0x0410   /* Muted teal for accents */
+#define COLOR_PANEL_BG        0x39C7   /* Dark charcoal panels — visible! */
+#define COLOR_PANEL_BORDER    0x5ACB   /* Panel border accent */
+#define COLOR_AXIS_LABEL      0x8C51   /* Dim gray for axis text */
+#define COLOR_STATS_BG        0x2945   /* Dark blue-gray for stats box */
+#define COLOR_STATS_TEXT      0xBDF7   /* Light gray for stats values */
+#define COLOR_CH1             0xFFC0   /* Warm amber for CH1 */
+#define COLOR_CH2             0x07FF   /* Cyan for CH2 */
 #define COLOR_GRID            COLOR_DARK_GRAY
 #define COLOR_TEXT            COLOR_WHITE
 #define COLOR_BACKGROUND      COLOR_BLACK

@@ -47,8 +47,8 @@ void ILI9341_Init(void)
 
     WriteCommand(0x3A); WriteData(0x55); /* 16-bit RGB565 */
 
-    /* Memory Access Control — portrait mode */
-    WriteCommand(0x36); WriteData(0x48);
+    /* Memory Access Control — landscape mode, no mirror */
+    WriteCommand(0x36); WriteData(0x68);
 
     /* Display Function Control */
     WriteCommand(0xB6); WriteData(0x0A); WriteData(0xA2);
