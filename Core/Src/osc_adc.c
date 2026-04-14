@@ -45,9 +45,17 @@ uint16_t* OSC_ADC_GetBuffer(uint8_t channel)
 
 void OSC_ADC_SetSampleRate(uint32_t arr)
 {
+    /* Fully stop the ADC+DMA+Timer chain first */
     HAL_TIM_Base_Stop(&htim2);
+    HAL_ADC_Stop_DMA(&hadc1);
+
+    /* Update timer period */
     __HAL_TIM_SET_AUTORELOAD(&htim2, arr);
     __HAL_TIM_SET_COUNTER(&htim2, 0);
+
+    /* Clear any pending flag and restart cleanly */
+    bufferReady = 0;
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcRawBuffer, ADC_BUFFER_SIZE);
     HAL_TIM_Base_Start(&htim2);
 }
 

@@ -15,6 +15,7 @@ static volatile OscState currentState  = STATE_RUN;
 static volatile uint8_t  activeChannel = 0;
 static volatile uint8_t  timeDivIndex  = 3;   /* 100us/div */
 static volatile uint8_t  voltDivIndex  = 1;   /* 1V/div */
+static volatile uint8_t  statsVisible  = 0;   /* Stats overlay off by default */
 static volatile uint32_t lastButtonTick = 0;
 
 void UI_HandleButton(uint16_t pin)
@@ -42,11 +43,15 @@ void UI_HandleButton(uint16_t pin)
     else if (pin == GPIO_PIN_3) {     /* PB3 — Channel */
         activeChannel = (activeChannel + 1) % NUM_CHANNELS;
     }
+    else if (pin == GPIO_PIN_4) {     /* PB4 — Stats Toggle */
+        statsVisible = !statsVisible;
+    }
 }
 
-OscState UI_GetState(void)      { return currentState; }
-uint8_t  UI_GetChannel(void)    { return activeChannel; }
+OscState UI_GetState(void)        { return currentState; }
+uint8_t  UI_GetChannel(void)      { return activeChannel; }
 uint8_t  UI_GetTimeDivIndex(void) { return timeDivIndex; }
 uint8_t  UI_GetVoltDivIndex(void) { return voltDivIndex; }
-uint32_t UI_GetTimeDivUs(void)  { return TIME_DIV_US[timeDivIndex]; }
-float    UI_GetVoltDiv(void)    { return VOLT_DIV_VALUES[voltDivIndex]; }
+uint32_t UI_GetTimeDivUs(void)    { return TIME_DIV_US[timeDivIndex]; }
+float    UI_GetVoltDiv(void)      { return VOLT_DIV_VALUES[voltDivIndex]; }
+uint8_t  UI_GetStatsVisible(void) { return statsVisible; }
