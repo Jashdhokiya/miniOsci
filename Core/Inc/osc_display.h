@@ -20,5 +20,6 @@ void Display_DrawStats(uint16_t* buffer, uint16_t size, uint8_t channel);
 void Display_ShowWarning(const char* msg);
 void Display_ClearWaveform(void);
 void Display_ClearScreen(void);
+uint8_t Display_NeedsGrid(void);
 
 #endif /* OSC_DISPLAY_H */

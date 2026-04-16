@@ -153,10 +153,27 @@ int main(void)
         float freq = Signal_GetFrequency(buf, SAMPLE_BUFFER_SIZE, sampleRate);
         float vpp  = Signal_GetVpp(buf, SAMPLE_BUFFER_SIZE);
 
-        Display_ClearWaveform();
-        Display_DrawGrid();
+        static uint8_t lastStatsVisible = 0;
+
+        /* If stats overlay was just turned off, full-clear once to wipe it */
+        if (lastStatsVisible && !UI_GetStatsVisible()) {
+            Display_ClearWaveform();
+        }
+        lastStatsVisible = UI_GetStatsVisible();
+
+        /* Grid: draw once, then only repaired internally by DrawWaveform.
+           Automatically redrawn if ClearWaveform was called above. */
+        if (Display_NeedsGrid()) {
+            Display_DrawGrid();
+        }
+
+        /* Axis labels: only redrawn internally when voltDiv changes */
         Display_DrawAxisLabels(timeDivIdx, voltDivIdx);
+
+        /* Waveform: self-erasing + grid repair */
         Display_DrawWaveform(buf, SAMPLE_BUFFER_SIZE, ch, voltDiv);
+
+        /* Measurements: only redrawn internally when values change */
         Display_DrawMeasurements(freq, vpp, ch, timeDivIdx, voltDivIdx, 0);
 
         /* Stats overlay (toggle with PB4) */
