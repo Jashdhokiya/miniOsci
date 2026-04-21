@@ -89,11 +89,17 @@ void ILI9341_Reset(void)
 void ILI9341_SetWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 {
     WriteCommand(0x2A);
-    WriteData(x0 >> 8); WriteData(x0 & 0xFF);
-    WriteData(x1 >> 8); WriteData(x1 & 0xFF);
+    uint8_t bufX[4] = { x0 >> 8, x0 & 0xFF, x1 >> 8, x1 & 0xFF };
+    DC_HIGH(); CS_LOW();
+    HAL_SPI_Transmit(&hspi1, bufX, 4, HAL_MAX_DELAY);
+    CS_HIGH();
+
     WriteCommand(0x2B);
-    WriteData(y0 >> 8); WriteData(y0 & 0xFF);
-    WriteData(y1 >> 8); WriteData(y1 & 0xFF);
+    uint8_t bufY[4] = { y0 >> 8, y0 & 0xFF, y1 >> 8, y1 & 0xFF };
+    DC_HIGH(); CS_LOW();
+    HAL_SPI_Transmit(&hspi1, bufY, 4, HAL_MAX_DELAY);
+    CS_HIGH();
+
     WriteCommand(0x2C);
 }
 
@@ -107,10 +113,23 @@ void ILI9341_WriteData16(uint16_t data)
 
 void ILI9341_WriteData16_Repeat(uint16_t data, uint32_t count)
 {
+    uint8_t buf[64];
+    uint8_t hi = data >> 8;
+    uint8_t lo = data & 0xFF;
+    for (int i = 0; i < 32; i++) {
+        buf[i*2] = hi;
+        buf[i*2+1] = lo;
+    }
+
     DC_HIGH(); CS_LOW();
-    uint8_t buf[2] = { data >> 8, data & 0xFF };
-    for (uint32_t i = 0; i < count; i++)
-        HAL_SPI_Transmit(&hspi1, buf, 2, HAL_MAX_DELAY);
+    uint32_t blocks = count / 32;
+    for (uint32_t i = 0; i < blocks; i++) {
+        HAL_SPI_Transmit(&hspi1, buf, 64, HAL_MAX_DELAY);
+    }
+    uint32_t rem = count % 32;
+    if (rem > 0) {
+        HAL_SPI_Transmit(&hspi1, buf, rem * 2, HAL_MAX_DELAY);
+    }
     CS_HIGH();
 }
 
